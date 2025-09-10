@@ -58,25 +58,46 @@
             font-size: 0.875rem;
             color: #415a77;
         }
+        /* New styles for the contact me drawer */
+        #contact-drawer {
+            position: absolute;
+            z-index: 100;
+            top: 100%;
+            right: 0;
+            width: 250px;
+            padding: 1rem;
+            background-color: var(--oxford-blue);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-icon-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body class="bg-[#e0e1dd] text-[#0d1b2a]">
 
     <div id="root">
         <header class="bg-[#1b263b] text-[#e0e1dd] shadow-md sticky top-0 z-50">
-            <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="container mx-auto px-6 py-4 flex items-center justify-between relative">
+                <h1 class="text-2xl font-bold">Rachit Goel</h1>
                 <nav class="flex space-x-4 text-sm sm:text-base">
                     <a href="#experience" class="hover:text-gray-400 transition-colors duration-300">Professional Experience</a>
                     <a href="#projects" class="hover:text-gray-400 transition-colors duration-300">Projects</a>
                     <a href="#education" class="hover:text-gray-400 transition-colors duration-300">Education</a>
                     <a href="#skills" class="hover:text-gray-400 transition-colors duration-300">Skills</a>
                 </nav>
-                <div class="flex flex-col items-end">
-                    <div class="w-24 h-24 rounded-full overflow-hidden shadow-lg border-2 border-[#e0e1dd]">
-                        <img src="YOUR_PHOTO_URL_HERE" alt="Rachit Goel" class="w-full h-full object-cover">
-                    </div>
-                    <h1 class="text-xl font-bold mt-2">Rachit Goel</h1>
-                    <div class="flex space-x-3 mt-1 text-sm text-gray-300">
+                <button id="contact-button" class="ml-4 px-4 py-2 bg-[#415a77] hover:bg-[#778da9] text-white rounded-full transition-colors duration-300">
+                    Contact Me
+                </button>
+                <div id="contact-drawer" class="absolute hidden">
+                    <div class="contact-icon-group">
                         <a href="https://github.com/rachitgoel89" target="_blank" rel="noopener noreferrer" class="hover:text-gray-400 transition-colors duration-300" aria-label="GitHub Profile">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.6.111.82-.266.82-.591 0-.291-.01-1.06-.015-2.075-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.332-1.758-1.332-1.758-1.09-.745.083-.729.083-.729 1.205.085 1.838 1.238 1.838 1.238 1.07 1.834 2.809 1.306 3.493.998.108-.77.42-1.306.762-1.604-2.665-.304-5.466-1.334-5.466-5.931 0-1.31.465-2.381 1.235-3.221-.124-.303-.535-1.521.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.006.404 2.292-1.552 3.298-1.23 3.298-1.23.652 1.655.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.609-2.805 5.626-5.474 5.923.42.362.81 1.096.81 2.219 0 1.604-.015 2.895-.015 3.284 0 .329.217.712.825.592 4.766-1.587 8.204-6.085 8.204-11.386 0-6.627-5.373-12-12-12z"/></svg>
                         </a>
@@ -304,6 +325,8 @@
             const locationButton = document.getElementById('location-button');
             const locationDrawer = document.getElementById('location-drawer');
             const locationContent = document.getElementById('location-content');
+            const contactButton = document.getElementById('contact-button');
+            const contactDrawer = document.getElementById('contact-drawer');
 
             function toggleDrawer(button, drawer, content, text) {
                 const rect = button.getBoundingClientRect();
@@ -313,6 +336,15 @@
                 drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
                 content.textContent = text;
             }
+
+            contactButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (contactDrawer.style.display === 'flex') {
+                    contactDrawer.style.display = 'none';
+                } else {
+                    contactDrawer.style.display = 'flex';
+                }
+            });
 
             phoneButton.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -328,9 +360,11 @@
             
             document.addEventListener('click', (e) => {
                 if (!phoneDrawer.contains(e.target) && !phoneButton.contains(e.target) &&
-                    !locationDrawer.contains(e.target) && !locationButton.contains(e.target)) {
+                    !locationDrawer.contains(e.target) && !locationButton.contains(e.target) &&
+                    !contactDrawer.contains(e.target) && !contactButton.contains(e.target)) {
                     phoneDrawer.style.display = 'none';
                     locationDrawer.style.display = 'none';
+                    contactDrawer.style.display = 'none';
                 }
             });
 
